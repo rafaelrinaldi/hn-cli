@@ -58,29 +58,27 @@ function parseStory(story) {
   return story.title;
 }
 
-fetchTopStories()
-  .then(function(response) {
-    return limitResults(response.body, options.limit);
-  })
-  .then(function(response) {
-    return parseTopStories(response);
-  })
-  .then(function(response) {
-    return response.map(function(item) {
-      return item.body;
+function refresh() {
+  return fetchTopStories()
+    .then(function(response) {
+      return limitResults(response.body, options.limit);
     })
-  })
-  .then(function(response) {
-    return response.map(function(item) {
-      return parseStory(item);
+    .then(function(response) {
+      return parseTopStories(response);
+    })
+    .then(function(response) {
+      return response.map(function(item) {
+        return item.body;
+      })
+    })
+    .then(function(response) {
+      return response.map(function(item) {
+        return parseStory(item);
+      });
+    })
+    .then(function(response) {
+      response.forEach(function(item) {
+        console.log(item);
+      })
     });
-  })
-  .then(function(response) {
-    response.forEach(function(item) {
-      console.log(item);
-    })
-  })
-  .catch(function(error) {
-    console.log('@error');
-    console.log(error);
-  });
+}
