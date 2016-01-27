@@ -1,5 +1,5 @@
 {
-  "name": "hn-cli",
+  "name": "@rafaelrinaldi/hn-cli",
   "version": "1.0.0",
   "description": "CLI app to browse Hacker News",
   "license": "MIT",
