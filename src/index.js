@@ -8,7 +8,7 @@ var spinner = require('./spinner');
 var Renderer = require('./renderer');
 var parseTableData = require('./parsers/table');
 var options = {
-  limit: 5,
+  limit: 15,
   fetch: {
     json: true,
     headers: {

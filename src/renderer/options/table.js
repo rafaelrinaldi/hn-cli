@@ -1,5 +1,4 @@
 module.exports = {
-  data: null,
   top: 1,
   left: 1,
   keys: true,
