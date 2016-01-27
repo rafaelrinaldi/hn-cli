@@ -9,6 +9,7 @@ var Renderer = require('./renderer');
 var renderer = new Renderer({
   onTableSelect: onTableSelect
 });
+var parseTableData = require('./parsers/table');
 var cache = {};
 var options = {
   limit: 5,
@@ -65,21 +66,7 @@ function refresh() {
     })
     // Format the result to a data format compatible with the table widget
     .then(function(response) {
-      return [[
-        'Title',
-        'Score',
-        'Comments',
-        'Author'
-      ]].concat(
-        response.map(function(item) {
-          return [
-            String(item.title),
-            String(item.score),
-            String(item.descendants),
-            String(item.by)
-          ];
-        })
-      );
+      return parseTableData(response);
     });
 }
 
