@@ -80,6 +80,13 @@ module.exports = function(options) {
 
   refresh(options)
     .then(function(response) {
+      console.log('here');
       render(renderer, response);
+    })
+    .catch(function(error) {
+      if(error.code === 'ENOTFOUND') {
+        spinner.stop();
+        console.log('Looks like you have some kind of internet connection issue ☹');
+      }
     });
 };
