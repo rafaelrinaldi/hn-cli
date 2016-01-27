@@ -44,7 +44,7 @@ Renderer.prototype.destroyScreenOnKeypress = function() {
 };
 
 Renderer.prototype.notifySelectedOnSelect = function() {
-  this.screen.destroy();
+  if(this.options.shouldCloseOnSelect) this.screen.destroy();
   if(this.options.onTableSelect) this.options.onTableSelect(this.table.selected);
 };
 

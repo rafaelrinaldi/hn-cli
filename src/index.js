@@ -6,11 +6,7 @@ var openUrl = require('openurl').open;
 var blessed = require('blessed');
 var spinner = require('./spinner');
 var Renderer = require('./renderer');
-var renderer = new Renderer({
-  onTableSelect: onTableSelect
-});
 var parseTableData = require('./parsers/table');
-var cache = {};
 var options = {
   limit: 5,
   fetch: {
@@ -21,6 +17,11 @@ var options = {
   }
 };
 var api = require('./api')(options.fetch);
+var renderer = new Renderer({
+  shouldCloseOnSelect: false,
+  onTableSelect: onTableSelect
+});
+var cache = {};
 
 function limitResults(results, limit) {
   return results.slice(0, limit || 30);
