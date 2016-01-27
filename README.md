@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-$ npm install -g @rafaelrinaldi/hn-cli --save
+$ npm install -g @rafaelrinaldi/hn-cli
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ Options:
 
 ## Features
 
-* Will always fetch the latest stories
+* Will always fetch the latest stories (displaying the same order as on the actual website)
 * You can use Vim arrow keys <kbd>j</kbd> and <kbd>k</kbd> to navigate through the list
 * When you select an item it'll open the URL on your default browser
 * Use <kbd>esc</kbd>, <kbd>⌃C<kbd> or <kbd>q</kbd> to close the program
