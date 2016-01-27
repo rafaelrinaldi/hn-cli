@@ -9,7 +9,7 @@ var blessed = require('blessed');
 var logUpdate = require('log-update');
 var frames = ['-', '\\', '|', '/'];
 var loader;
-var Renderer = require('./src/renderer');
+var Renderer = require('./renderer');
 var renderer = new Renderer({
   onTableSelect: onTableSelect
 });

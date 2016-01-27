@@ -1,5 +1,6 @@
 'use strict';
 
+var hnCli = require('./src/');
 var minimist = require('minimist');
 var multiline = require('multiline');
 var defaults = {
