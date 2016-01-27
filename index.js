@@ -6,6 +6,9 @@ var objectAssign = require('object-assign');
 var openUrl = require('openurl').open;
 var format = require('util').format;
 var blessed = require('blessed');
+var logUpdate = require('log-update');
+var frames = ['-', '\\', '|', '/'];
+var loader;
 var Renderer = require('./src/renderer');
 var renderer = new Renderer({
   onTableSelect: onTableSelect
@@ -24,7 +27,6 @@ var api = {
   url: 'https://hacker-news.firebaseio.com/%s',
   version: 'v0',
   fetch: function(url) {
-    console.log('fetch', url);
     return got(url, options.fetch);
   },
   base: function() {
@@ -39,16 +41,16 @@ var api = {
 };
 
 function limitResults(results, limit) {
-  console.log('limit results to', limit);
   return results.slice(0, limit || 30);
 }
 
 function fetchTopStories() {
-  console.log('fetching top stories...');
+  loading('Fetching top stories');
   return api.fetch(api.stories());
 }
 
 function parseTopStories(stories) {
+  loading('Loading top stories details');
   return Promise.all(
       stories.map(function(id) {
         return fetchStory(id);
@@ -57,7 +59,6 @@ function parseTopStories(stories) {
 }
 
 function fetchStory(id) {
-  console.log('fetchind story', id);
   return api.fetch(api.story(id));
 }
 
@@ -82,6 +83,8 @@ function refresh() {
       // Store data to the cache
       cache = objectAssign(cache, response);
 
+      loaded();
+
       return [[
         'Title',
         'Score',
@@ -99,6 +102,20 @@ function refresh() {
       );
     });
 }
+function loading(text) {
+  loaded();
+
+  var frame = 0;
+
+  loader = setInterval(function() {
+    logUpdate(frames[frame = ++frame % frames.length] + ' ' + (text || ''));
+  }, 100);
+}
+
+function loaded() {
+  logUpdate.clear();
+  clearInterval(loader);
+}
 
 function onTableSelect(index) {
   var selected = cache[index - 1];
@@ -106,7 +123,6 @@ function onTableSelect(index) {
 }
 
 function render(data) {
-  console.log(data);
   renderer.render(data);
 }
 
