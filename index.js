@@ -75,19 +75,17 @@ function refresh() {
       })
     })
     .then(function(response) {
-      return response.map(function(item) {
-        return parseStory(item);
-      });
-    })
-    .then(function(response) {
-      response.forEach(function(item) {
-        console.log(item);
-      })
+      return [['Title', 'Score']].concat(
+        response.map(function(item) {
+          return [item.title, item.score];
+        })
+      );
     });
 }
 
-var renderer = new Renderer();
-renderer.render([
-  ['Foo', 'Bar'],
-  ['abc', 'def']
-]);
+function render(data) {
+  var renderer = new Renderer();
+  renderer.render(data);
+}
+
+refresh().then(render);
