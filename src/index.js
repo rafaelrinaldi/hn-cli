@@ -6,9 +6,7 @@ var objectAssign = require('object-assign');
 var openUrl = require('openurl').open;
 var format = require('util').format;
 var blessed = require('blessed');
-var logUpdate = require('log-update');
-var frames = ['-', '\\', '|', '/'];
-var loader;
+var spinner = require('./spinner');
 var Renderer = require('./renderer');
 var renderer = new Renderer({
   onTableSelect: onTableSelect
@@ -45,12 +43,13 @@ function limitResults(results, limit) {
 }
 
 function fetchTopStories() {
-  loading('Fetching top stories');
+  spinner.start('Fetching top stories');
   return api.fetch(api.stories());
 }
 
 function parseTopStories(stories) {
-  loading('Loading top stories details');
+  spinner.start('Loading top stories details');
+
   return Promise.all(
       stories.map(function(id) {
         return fetchStory(id);
@@ -83,7 +82,7 @@ function refresh() {
       // Store data to the cache
       cache = objectAssign(cache, response);
 
-      loaded();
+      spinner.stop();
 
       return [[
         'Title',
@@ -101,20 +100,6 @@ function refresh() {
         })
       );
     });
-}
-function loading(text) {
-  loaded();
-
-  var frame = 0;
-
-  loader = setInterval(function() {
-    logUpdate(frames[frame = ++frame % frames.length] + ' ' + (text || ''));
-  }, 100);
-}
-
-function loaded() {
-  logUpdate.clear();
-  clearInterval(loader);
 }
 
 function onTableSelect(index) {
