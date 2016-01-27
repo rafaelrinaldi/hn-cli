@@ -7,8 +7,7 @@ var blessed = require('blessed');
 var spinner = require('./spinner');
 var Renderer = require('./renderer');
 var parseTableData = require('./parsers/table');
-var options = {
-  limit: 15,
+var defaults = {
   fetch: {
     json: true,
     headers: {
@@ -16,15 +15,18 @@ var options = {
     }
   }
 };
-var api = require('./api')(options.fetch);
-var renderer = new Renderer({
-  shouldCloseOnSelect: true,
-  onTableSelect: onTableSelect
-});
+var api = require('./api')(defaults.fetch);
 var cache = {};
 
+function createRenderer(options) {
+  return new Renderer({
+    shouldCloseOnSelect: !options['keep-open'],
+    onTableSelect: onTableSelect
+  });
+}
+
 function limitResults(results, limit) {
-  return results.slice(0, limit || 30);
+  return results.slice(0, limit);
 }
 
 function fetchTopStories() {
@@ -42,7 +44,7 @@ function fetchTopStoriesDetails(stories) {
     );
 }
 
-function refresh() {
+function refresh(options) {
   return fetchTopStories()
     // Limit results before requests are fired
     .then(function(response) {
@@ -76,8 +78,16 @@ function onTableSelect(index) {
   openUrl(selected.url);
 }
 
-function render(data) {
+function render(renderer, data) {
   renderer.render(data);
 }
 
-refresh().then(render);
+module.exports = function(options) {
+  var options = objectAssign(defaults, options);
+  var renderer = createRenderer(options);
+
+  refresh(options)
+    .then(function(response) {
+      render(renderer, response);
+    });
+};

@@ -1,6 +1,6 @@
 'use strict';
 
-var hnCli = require('./src/');
+var hn = require('./src/');
 var minimist = require('minimist');
 var multiline = require('multiline');
 var defaults = {
@@ -9,34 +9,41 @@ var defaults = {
     'version'
   ],
   alias: {
-    h: 'help',
-    v: 'version'
+    'h': 'help',
+    'v': 'version',
+    'l': 'limit',
+    'k': 'keep-open'
+  },
+  default: {
+    'limit': 15,
+    'keep-open': false
   }
 };
 var version = require('./package.json').version;
+
+/* eslint-disable */
 var help = multiline(function() {/*
 
-Usage: hn-cli [PATH] [OPTIONS]
+Usage: hn [OPTIONS]
 
-  CLI app to browse HN
+  CLI app to browse Hacker News
 
 Example:
-  hn-cli . --foo=bar
+  $ hn --limit 10 --keep-open
 
 Options:
   -v --version              Display current software version.
   -h --help                 Display help and usage details.
-  -f --foo                  Some custom option.
-
+  -l --limit                Limit the number of items to display (defaults to `15`).
+  -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to `false`).
 
 */});
+/* eslint-enable */
 
-function run(argv) {
-  console.log('hn-cli is alive!');
-}
-
+// Must be ≠ 0 if any errors occur during execution
 exports.exitCode = 0;
 
+// Allow mocking the stdout/stderr
 exports.stdout = process.stdout;
 exports.stderr = process.stderr;
 
@@ -45,6 +52,7 @@ exports.parse = function(options) {
 };
 
 exports.run = function(argv) {
+  // Reset status code at each run
   exports.exitCode = 0;
 
   if(argv.help) {
@@ -59,3 +67,7 @@ exports.run = function(argv) {
 
   run(argv);
 };
+
+function run(argv) {
+  hn(argv);
+}
