@@ -44,10 +44,6 @@ function fetchStory(id) {
   return api.fetch(api.story(id));
 }
 
-function parseStory(story) {
-  return story.title;
-}
-
 function refresh() {
   return fetchTopStories()
     .then(function(response) {
