@@ -2,7 +2,10 @@
 
 var Promise = require('pinkie-promise');
 var got = require('got');
+var openUrl = require('openurl');
 var format = require('util').format;
+var blessed = require('blessed');
+var Renderer = require('./src/renderer');
 var cache = {};
 var options = {
   limit: 5,
@@ -82,3 +85,9 @@ function refresh() {
       })
     });
 }
+
+var renderer = new Renderer();
+renderer.render([
+  ['Foo', 'Bar'],
+  ['abc', 'def']
+]);

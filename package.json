@@ -43,10 +43,12 @@
     "app"
   ],
   "dependencies": {
+    "blessed": "^0.1.81",
     "chalk": "^1.1.1",
     "got": "^6.1.1",
     "minimist": "^1.2.0",
     "multiline": "^1.0.2",
+    "openurl": "^1.1.1",
     "pinkie-promise": "^2.0.0"
   },
   "devDependencies": {
