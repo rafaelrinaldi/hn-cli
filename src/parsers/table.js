@@ -10,7 +10,7 @@ module.exports = function(data) {
           String(item.title),
           String(item.score),
           String(item.descendants),
-            String(item.by)
+          String(item.by)
         ];
       })
     );

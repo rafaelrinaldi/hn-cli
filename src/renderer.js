@@ -17,16 +17,21 @@ Renderer.prototype.destroyScreenOnKeypress = function() {
 };
 
 Renderer.prototype.notifySelectedOnSelect = function() {
-  if(this.options.shouldCloseOnSelect) this.screen.destroy();
-  if(this.options.onTableSelect) this.options.onTableSelect(this.table.selected);
+  if (this.options.shouldCloseOnSelect) {
+    this.screen.destroy();
+  }
+
+  if (this.options.onTableSelect) {
+    this.options.onTableSelect(this.table.selected);
+  }
 };
 
 Renderer.prototype.render = function(data) {
-  if(!this.screen) {
+  if (!this.screen) {
     this.screen = UI.screen(screenOptions);
   }
 
-  if(!this.table) {
+  if (!this.table) {
     this.table = UI.listtable(tableOptions);
   }
 
@@ -37,6 +42,6 @@ Renderer.prototype.render = function(data) {
 
   this.screen.append(this.table);
   this.screen.render();
-}
+};
 
 module.exports = Renderer;

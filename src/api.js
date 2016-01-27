@@ -21,7 +21,7 @@ function api(options) {
     story: function(id, shouldPrettyPrint) {
       return this.base() + '/item/' + id + '.json' + (shouldPrettyPrint ? '?print=pretty' : '');
     }
-  }
+  };
 }
 
 module.exports = api;

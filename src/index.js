@@ -49,14 +49,16 @@ function refresh(options) {
     .then(function(response) {
       return response.map(function(item) {
         return item.body;
-      })
+      });
     })
     .then(function(response) {
       // Finally loaded
       spinner.stop();
 
       // Store data to the cache so it can be used later
-      return cache = response;
+      cache = response;
+
+      return cache;
     })
     // Format the result to a data format compatible with the table widget
     .then(function(response) {

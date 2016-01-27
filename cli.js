@@ -9,10 +9,10 @@ var defaults = {
     'version'
   ],
   alias: {
-    'h': 'help',
-    'v': 'version',
-    'l': 'limit',
-    'k': 'keep-open'
+    h: 'help',
+    v: 'version',
+    l: 'limit',
+    k: 'keep-open'
   },
   default: {
     'limit': 15,
@@ -55,12 +55,12 @@ exports.run = function(argv) {
   // Reset status code at each run
   exports.exitCode = 0;
 
-  if(argv.help) {
+  if (argv.help) {
     exports.stderr.write(help);
     return;
   }
 
-  if(argv.version) {
+  if (argv.version) {
     exports.stderr.write('hn-cli v' + version + '\n');
     return;
   }
