@@ -15,7 +15,7 @@ var defaults = {
     k: 'keep-open'
   },
   default: {
-    'limit': 15,
+    'limit': 20,
     'keep-open': false
   }
 };
