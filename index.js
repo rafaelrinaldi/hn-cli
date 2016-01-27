@@ -80,9 +80,7 @@ function refresh() {
     })
     .then(function(response) {
       // Store data to the cache
-      cache = response;
-
-      console.log(response);
+      cache = objectAssign(cache, response);
 
       return [[
         'Title',
@@ -92,10 +90,10 @@ function refresh() {
       ]].concat(
         response.map(function(item) {
           return [
-            item.title,
-            item.score,
-            item.descendants,
-            item.by
+            String(item.title),
+            String(item.score),
+            String(item.descendants),
+            String(item.by)
           ];
         })
       );
@@ -108,8 +106,8 @@ function onTableSelect(index) {
 }
 
 function render(data) {
+  console.log(data);
   renderer.render(data);
 }
 
-// refresh()
 refresh().then(render);

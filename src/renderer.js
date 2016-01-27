@@ -12,9 +12,9 @@ var tableOptions = {
   top: 1,
   left: 1,
   keys: true,
-  align: 'left',
   width: '100%',
-  height: '70%',
+  height: '50%',
+  align: 'left',
   vi: true,
   mouse: true,
   style: {
