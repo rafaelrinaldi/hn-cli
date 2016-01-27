@@ -1,21 +1,12 @@
 'use strict';
 
 var Promise = require('pinkie-promise');
-var objectAssign = require('object-assign');
 var openUrl = require('openurl').open;
-var blessed = require('blessed');
 var spinner = require('./spinner');
 var Renderer = require('./renderer');
 var parseTableData = require('./parsers/table');
-var defaults = {
-  fetch: {
-    json: true,
-    headers: {
-      'user-agent': 'https://github.com/rafaelrinaldi/hn-cli'
-    }
-  }
-};
-var api = require('./api')(defaults.fetch);
+var fetchOptions = require('./options/fetch');
+var api = require('./api')(fetchOptions);
 var cache = {};
 
 function createRenderer(options) {
@@ -83,7 +74,6 @@ function render(renderer, data) {
 }
 
 module.exports = function(options) {
-  var options = objectAssign(defaults, options);
   var renderer = createRenderer(options);
 
   refresh(options)
