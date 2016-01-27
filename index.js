@@ -6,6 +6,7 @@ var openUrl = require('openurl');
 var format = require('util').format;
 var blessed = require('blessed');
 var Renderer = require('./src/renderer');
+var renderer = new Renderer();
 var cache = {};
 var options = {
   limit: 5,
@@ -75,16 +76,28 @@ function refresh() {
       })
     })
     .then(function(response) {
-      return [['Title', 'Score']].concat(
+      // Store data to the cache
+      cache = response;
+
+      return [[
+        'Title',
+        'Score',
+        'Comments',
+        'Author'
+      ]].concat(
         response.map(function(item) {
-          return [item.title, item.score];
+          return [
+            item.title,
+            item.score,
+            item.descendants,
+            item.by
+          ];
         })
       );
     });
 }
 
 function render(data) {
-  var renderer = new Renderer();
   renderer.render(data);
 }
 
