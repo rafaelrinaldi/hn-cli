@@ -1,0 +1,55 @@
+{
+  "name": "hn-cli",
+  "version": "1.0.0",
+  "description": "CLI app to browse HN",
+  "license": "MIT",
+  "repository": "rafaelrinaldi/hn-cli",
+  "bugs": {
+    "url": "https://github.com/rafaelrinaldi/hn-cli/issues"
+  },
+  "homepage": "https://github.com/rafaelrinaldi/hn-cli#readme",
+  "author": {
+    "name": "Rafael Rinaldi",
+    "email": "rafael@rinaldi.io",
+    "url": "rinaldi.io"
+  },
+  "bin": {
+    "hn-cli": "./bin/hn-cli"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "space-before-function-paren": [
+        2,
+        "never"
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "xo",
+    "test": "npm run lint"
+  },
+  "keywords": [
+    "cli",
+    "hn",
+    "hacker",
+    "news",
+    "feed",
+    "rss",
+    "reader",
+    "app"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "got": "^6.1.1",
+    "minimist": "^1.2.0",
+    "multiline": "^1.0.2",
+    "pinkie-promise": "^2.0.0"
+  },
+  "devDependencies": {
+    "xo": "^0.12.1"
+  }
+}
