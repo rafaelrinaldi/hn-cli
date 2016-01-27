@@ -30,7 +30,9 @@ var tableOptions = {
   }
 }
 
-function Renderer() {}
+function Renderer(options) {
+  this.options = options || {};
+}
 
 Renderer.prototype.setupEvents = function() {
   this.screen.key(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
@@ -43,7 +45,7 @@ Renderer.prototype.destroyScreenOnKeypress = function() {
 
 Renderer.prototype.notifySelectedOnSelect = function() {
   this.screen.destroy();
-  console.log('selected ->', this.table.selected);
+  if(this.options.onTableSelect) this.options.onTableSelect(this.table.selected);
 };
 
 Renderer.prototype.render = function(data) {

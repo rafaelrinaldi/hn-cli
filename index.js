@@ -2,11 +2,14 @@
 
 var Promise = require('pinkie-promise');
 var got = require('got');
-var openUrl = require('openurl');
+var objectAssign = require('object-assign');
+var openUrl = require('openurl').open;
 var format = require('util').format;
 var blessed = require('blessed');
 var Renderer = require('./src/renderer');
-var renderer = new Renderer();
+var renderer = new Renderer({
+  onTableSelect: onTableSelect
+});
 var cache = {};
 var options = {
   limit: 5,
@@ -79,6 +82,8 @@ function refresh() {
       // Store data to the cache
       cache = response;
 
+      console.log(response);
+
       return [[
         'Title',
         'Score',
@@ -97,8 +102,14 @@ function refresh() {
     });
 }
 
+function onTableSelect(index) {
+  var selected = cache[index - 1];
+  openUrl(selected.url);
+}
+
 function render(data) {
   renderer.render(data);
 }
 
+// refresh()
 refresh().then(render);
