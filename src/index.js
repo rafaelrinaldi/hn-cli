@@ -18,7 +18,7 @@ var options = {
 };
 var api = require('./api')(options.fetch);
 var renderer = new Renderer({
-  shouldCloseOnSelect: false,
+  shouldCloseOnSelect: true,
   onTableSelect: onTableSelect
 });
 var cache = {};

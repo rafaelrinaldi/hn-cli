@@ -1,34 +1,7 @@
-var blessed = require('blessed');
+var UI = require('blessed');
+var screenOptions = require('./renderer/options/screen');
+var tableOptions = require('./renderer/options/table');
 var ESCAPE_KEYS = ['escape', 'q', 'C-c'];
-
-var screenOptions = {
-  autoPadding: false,
-  fullUnicode: true,
-  title: 'HN'
-}
-
-var tableOptions = {
-  data: null,
-  top: 1,
-  left: 1,
-  keys: true,
-  width: '100%',
-  height: '50%',
-  align: 'left',
-  vi: true,
-  mouse: true,
-  style: {
-    header: {
-      inverse: true,
-      bold: true
-    },
-    cell: {
-      selected: {
-        bg: 'lightgray'
-      }
-    }
-  }
-}
 
 function Renderer(options) {
   this.options = options || {};
@@ -50,11 +23,11 @@ Renderer.prototype.notifySelectedOnSelect = function() {
 
 Renderer.prototype.render = function(data) {
   if(!this.screen) {
-    this.screen = blessed.screen(screenOptions);
+    this.screen = UI.screen(screenOptions);
   }
 
   if(!this.table) {
-    this.table = blessed.listtable(tableOptions);
+    this.table = UI.listtable(tableOptions);
   }
 
   this.setupEvents();
