@@ -30,39 +30,41 @@ function fetchTopStories() {
   return api.fetch(api.stories());
 }
 
-function parseTopStories(stories) {
+function fetchTopStoriesDetails(stories) {
   spinner.start('Loading top stories details');
 
   return Promise.all(
       stories.map(function(id) {
-        return fetchStory(id);
+        return api.fetch(api.story(id));
       })
     );
 }
 
-function fetchStory(id) {
-  return api.fetch(api.story(id));
-}
-
 function refresh() {
   return fetchTopStories()
+    // Limit results before requests are fired
     .then(function(response) {
       return limitResults(response.body, options.limit);
     })
+    // Fires all requests to top stories
     .then(function(response) {
-      return parseTopStories(response);
+      return fetchTopStoriesDetails(response);
     })
+    // Returns a formatted array with the request response
     .then(function(response) {
       return response.map(function(item) {
         return item.body;
       })
     })
     .then(function(response) {
-      // Store data to the cache
-      cache = objectAssign(cache, response);
-
+      // Finally loaded
       spinner.stop();
 
+      // Store data to the cache so it can be used later
+      return cache = response;
+    })
+    // Format the result to a data format compatible with the table widget
+    .then(function(response) {
       return [[
         'Title',
         'Score',
