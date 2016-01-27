@@ -1,7 +1,7 @@
 {
   "name": "hn-cli",
   "version": "1.0.0",
-  "description": "CLI app to browse HN",
+  "description": "CLI app to browse Hacker News",
   "license": "MIT",
   "repository": "rafaelrinaldi/hn-cli",
   "bugs": {
@@ -14,7 +14,7 @@
     "url": "rinaldi.io"
   },
   "bin": {
-    "hn-cli": "./bin/hn-cli"
+    "hn": "./bin/hn-cli"
   },
   "engines": {
     "node": ">=0.10.0"
