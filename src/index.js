@@ -1,57 +1,54 @@
 'use strict';
 
-var Promise = require('pinkie-promise');
-var openUrl = require('openurl').open;
-var spinner = require('./spinner');
-var Renderer = require('./renderer');
-var parseTableData = require('./parsers/table');
-var fetchOptions = require('./options/fetch');
-var api = require('./api')(fetchOptions);
-var cache = {};
+const Promise = require('pinkie-promise');
+const openUrl = require('openurl').open;
+const spinner = require('./spinner');
+const Renderer = require('./renderer');
+const parseTableData = require('./parsers/table');
+const fetchOptions = require('./options/fetch');
+const api = require('./api')(fetchOptions);
 
-function createRenderer(options) {
+let cache = {};
+
+const createRenderer = options => {
   return new Renderer({
     shouldCloseOnSelect: !options['keep-open'],
-    onTableSelect: onTableSelect
+    onTableSelect
   });
 }
 
-function limitResults(results, limit) {
-  return results.slice(0, limit);
-}
+const limitResults = (results, limit) => results.slice(0, limit);
 
-function fetchTopStories() {
+const fetchTopStories = () => {
   spinner.start('Fetching top stories');
   return api.fetch(api.stories());
 }
 
-function fetchTopStoriesDetails(stories, limit) {
-  spinner.start('Loading details of the latest ' + limit + ' top stories');
+const fetchTopStoriesDetails = (stories, limit) => {
+  spinner.start(`Loading details of the latest ${limit} top stories`);
 
   return Promise.all(
-      stories.map(function(id) {
+      stories.map(id => {
         return api.fetch(api.story(id));
       })
     );
 }
 
-function refresh(options) {
+const refresh = options => {
   return fetchTopStories()
     // Limit results before requests are fired
-    .then(function(response) {
+    .then(response => {
       return limitResults(response.body, options.limit);
     })
     // Fires all requests to top stories
-    .then(function(response) {
+    .then(response => {
       return fetchTopStoriesDetails(response, options.limit);
     })
     // Returns a formatted array with the request response
-    .then(function(response) {
-      return response.map(function(item) {
-        return item.body;
-      });
+    .then(response => {
+      return response.map(item => item.body);
     })
-    .then(function(response) {
+    .then(response => {
       // Finally loaded
       spinner.stop();
 
@@ -61,28 +58,26 @@ function refresh(options) {
       return cache;
     })
     // Format the result to a data format compatible with the table widget
-    .then(function(response) {
+    .then(response => {
       return parseTableData(response);
     });
 }
 
-function onTableSelect(index) {
-  var selected = cache[index - 1];
+const onTableSelect = index => {
+  const selected = cache[index - 1];
   openUrl(selected.url);
 }
 
-function render(renderer, data) {
-  renderer.render(data);
-}
+const render = (renderer, data) => renderer.render(data);
 
-module.exports = function(options) {
-  var renderer = createRenderer(options);
+module.exports = options => {
+  const renderer = createRenderer(options);
 
   refresh(options)
-    .then(function(response) {
+    .then(response => {
       render(renderer, response);
     })
-    .catch(function(error) {
+    .catch(error => {
       if (error.code === 'ENOTFOUND') {
         spinner.stop();
         console.log('Looks like you have some kind of internet connection issue ☹');
