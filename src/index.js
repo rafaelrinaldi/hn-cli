@@ -10,19 +10,12 @@ const api = require('./api')(fetchOptions);
 
 let cache = {};
 
-const createRenderer = options => {
-  return new Renderer({
-    shouldCloseOnSelect: !options['keep-open'],
-    onTableSelect
-  });
-}
-
 const limitResults = (results, limit) => results.slice(0, limit);
 
 const fetchTopStories = () => {
   spinner.start('Fetching top stories');
   return api.fetch(api.stories());
-}
+};
 
 const fetchTopStoriesDetails = (stories, limit) => {
   spinner.start(`Loading details of the latest ${limit} top stories`);
@@ -32,7 +25,7 @@ const fetchTopStoriesDetails = (stories, limit) => {
         return api.fetch(api.story(id));
       })
     );
-}
+};
 
 const refresh = options => {
   return fetchTopStories()
@@ -61,14 +54,21 @@ const refresh = options => {
     .then(response => {
       return parseTableData(response);
     });
-}
+};
 
 const onTableSelect = index => {
   const selected = cache[index - 1];
   openUrl(selected.url);
-}
+};
 
 const render = (renderer, data) => renderer.render(data);
+
+const createRenderer = options => {
+  return new Renderer({
+    shouldCloseOnSelect: !options['keep-open'],
+    onTableSelect
+  });
+};
 
 module.exports = options => {
   const renderer = createRenderer(options);

@@ -6,18 +6,18 @@ const frames = ['-', '\\', '|', '/'];
 let frame = 0;
 let interval;
 
+const stop = () => {
+  logUpdate.clear();
+  clearInterval(interval);
+};
+
 const start = text => {
   stop();
 
   interval = setInterval(() => {
-    logUpdate(frames[frame = ++frame % frames.length] + ' ' + (text || ''));
+    logUpdate(`${frames[frame = ++frame % frames.length]} ${text ? text : ''}`);
   }, 100);
-}
-
-const stop = () => {
-  logUpdate.clear();
-  clearInterval(interval);
-}
+};
 
 module.exports = {
   start,

@@ -11,13 +11,13 @@ const api = options => {
     },
 
     stories() {
-      return this.base() + '/topstories.json';
+      return `${this.base()}/topstories.json`;
     },
 
     story(id, shouldPrettyPrint) {
-      return this.base() + `/item/${id}.json` + (shouldPrettyPrint ? '?print=pretty' : '');
+      return `${this.base()}/item/${id}.json${shouldPrettyPrint ? '?print=pretty' : ''}`;
     }
-  }
-}
+  };
+};
 
 module.exports = api;

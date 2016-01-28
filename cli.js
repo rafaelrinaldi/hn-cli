@@ -2,7 +2,6 @@
 
 const hn = require('./src/');
 const minimist = require('minimist');
-const multiline = require('multiline');
 const version = require('./package.json').version;
 const defaults = {
   boolean: [
@@ -36,6 +35,8 @@ Options:
   -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to false).
 `;
 
+const run = argv => hn(argv);
+
 // Must be ≠ 0 if any errors occur during execution
 exports.exitCode = 0;
 
@@ -62,4 +63,3 @@ exports.run = argv => {
   run(argv);
 };
 
-const run = argv => hn(argv);
