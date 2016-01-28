@@ -59,7 +59,7 @@ const refresh = options => {
 const onTableSelect = (index, key) => {
   const selected = cache[index - 1];
 
-  if(key === 'c') {
+  if (key === 'c') {
     openUrl(api.storyUrl(selected.id));
   } else {
     openUrl(selected.url);
