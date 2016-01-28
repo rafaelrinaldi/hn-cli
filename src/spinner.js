@@ -1,22 +1,25 @@
-var logUpdate = require('log-update');
-var frames = ['-', '\\', '|', '/'];
-var frame = 0;
-var interval;
+'use strict';
 
-function start(text) {
+const logUpdate = require('log-update');
+const frames = ['-', '\\', '|', '/'];
+
+let frame = 0;
+let interval;
+
+const start = text => {
   stop();
 
-  interval = setInterval(function() {
+  interval = setInterval(() => {
     logUpdate(frames[frame = ++frame % frames.length] + ' ' + (text || ''));
   }, 100);
 }
 
-function stop() {
+const stop = () => {
   logUpdate.clear();
   clearInterval(interval);
 }
 
 module.exports = {
-  start: start,
-  stop: stop
+  start,
+  stop
 };
