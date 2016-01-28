@@ -86,9 +86,9 @@ module.exports = options => {
       spinner.stop();
 
       if (error.code === 'ENOTFOUND') {
-        console.log('Looks like you have some kind of internet connection issue ☹');
+        console.log('Looks like you have internet connection issues ☹');
       } else if (error.code === 'ETIMEDOUT') {
-        console.log('Request timeout ☹ Might want to try again?');
+        console.log('Request timeout ☹ Maybe try again?');
       }
     });
 };
