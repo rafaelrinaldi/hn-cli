@@ -1,14 +1,16 @@
-var moment = require('moment');
-var time = require('./time');
+'use strict';
 
-module.exports = function(data) {
+const moment = require('moment');
+const time = require('./time');
+
+module.exports = data => {
   return [[
     'Title',
     'By',
     'When'
   ]].concat(
-      data.map(function(item) {
-        var when = time(item.time);
+      data.map(item => {
+        const when = time(item.time);
 
         return [
           String(item.title),
