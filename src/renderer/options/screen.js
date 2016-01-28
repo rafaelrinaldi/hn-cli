@@ -1,5 +1,5 @@
 module.exports = {
-  autoPadding: false,
+  autoPadding: true,
   fullUnicode: true,
   title: 'Hacker News 📰'
 };
