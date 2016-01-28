@@ -13,7 +13,7 @@ let cache = {};
 const createRenderer = options => {
   return new Renderer({
     shouldCloseOnSelect: !options['keep-open'],
-    onTableSelect
+    onTableSelect: onTableSelect
   });
 }
 

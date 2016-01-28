@@ -1,47 +1,46 @@
-var UI = require('blessed');
-var screenOptions = require('./renderer/options/screen');
-var tableOptions = require('./renderer/options/table');
-var ESCAPE_KEYS = ['escape', 'q', 'C-c'];
+'use strict';
 
-function Renderer(options) {
-  this.options = options || {};
-}
+const UI = require('blessed');
+const screenOptions = require('./renderer/options/screen');
+const tableOptions = require('./renderer/options/table');
+const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 
-Renderer.prototype.setupEvents = function() {
-  this.screen.key(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
-  this.table.on('select', this.notifySelectedOnSelect.bind(this));
-};
-
-Renderer.prototype.destroyScreenOnKeypress = function() {
-  return this.screen.destroy();
-};
-
-Renderer.prototype.notifySelectedOnSelect = function() {
-  if (this.options.shouldCloseOnSelect) {
-    this.screen.destroy();
+class Renderer {
+  constructor(options) {
+    this.options = options || {};
   }
 
-  if (this.options.onTableSelect) {
-    this.options.onTableSelect(this.table.selected);
-  }
-};
-
-Renderer.prototype.render = function(data) {
-  if (!this.screen) {
+  render(data) {
     this.screen = UI.screen(screenOptions);
-  }
-
-  if (!this.table) {
     this.table = UI.listtable(tableOptions);
+
+    this.table.focus();
+    this.table.setData(data);
+
+    this.screen.append(this.table);
+    this.screen.render();
+
+    this.setupEvents();
   }
 
-  this.setupEvents();
+  setupEvents() {
+    this.screen.key(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
+    this.table.on('select', this.notifySelectedOnSelect.bind(this));
+  }
 
-  this.table.focus();
-  this.table.setData(data);
+  destroyScreenOnKeypress() {
+    return this.screen.destroy();
+  }
 
-  this.screen.append(this.table);
-  this.screen.render();
-};
+  notifySelectedOnSelect() {
+    if (this.options.shouldCloseOnSelect) {
+      this.screen.destroy();
+    }
+
+    if (this.options.onTableSelect) {
+      this.options.onTableSelect(this.table.selected);
+    }
+  }
+}
 
 module.exports = Renderer;
