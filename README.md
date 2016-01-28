@@ -21,7 +21,7 @@ Example:
 Options:
   -v --version              Display current software version.
   -h --help                 Display help and usage details.
-  -l --limit                Limit the number of items to display (defaults to `15`).
+  -l --limit                Limit the number of items to display (defaults to `150`).
   -k --keep-open            Wether or not to keep the list open after selecting an item (defaults to `false`).
 ```
 
