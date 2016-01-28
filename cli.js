@@ -26,7 +26,7 @@ var help = multiline(function() {/*
 
 Usage: hn [OPTIONS]
 
-  CLI app to browse Hacker News
+  CLI to browse Hacker News
 
 Example:
   $ hn --limit 10 --keep-open

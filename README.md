@@ -1,6 +1,6 @@
 # hn-cli [![Build Status](https://semaphoreci.com/api/v1/projects/b264dc61-16ef-44f3-8130-4fbb5dd25169/676578/badge.svg)](https://semaphoreci.com/rafaelrinaldi/hn-cli)
 
-> CLI app to browse [Hacker News](http://news.ycombinator.com)
+> CLI to browse [Hacker News](http://news.ycombinator.com)
 
 ## Install
 
@@ -13,7 +13,7 @@ $ npm install -g @rafaelrinaldi/hn-cli
 ```sh
 Usage: hn [OPTIONS]
 
-  CLI app to browse Hacker News
+  CLI to browse Hacker News
 
 Example:
   $ hn --limit 10 --keep-open
