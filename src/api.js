@@ -1,27 +1,23 @@
-var format = require('util').format;
-var got = require('got');
-
-function api(options) {
+const got = require('got');
+const api = options => {
   return {
-    url: 'https://hacker-news.firebaseio.com/%s',
+    url: 'https://hacker-news.firebaseio.com',
     version: 'v0',
 
-    fetch: function(url) {
-      return got(url, options);
+    fetch: url => got(url, options),
+
+    base() {
+      return `${this.url}/${this.version}`;
     },
 
-    base: function() {
-      return format(this.url, this.version);
-    },
-
-    stories: function() {
+    stories() {
       return this.base() + '/topstories.json';
     },
 
-    story: function(id, shouldPrettyPrint) {
-      return this.base() + '/item/' + id + '.json' + (shouldPrettyPrint ? '?print=pretty' : '');
+    story(id, shouldPrettyPrint) {
+      return this.base() + `/item/${id}.json` + (shouldPrettyPrint ? '?print=pretty' : '');
     }
-  };
+  }
 }
 
 module.exports = api;
