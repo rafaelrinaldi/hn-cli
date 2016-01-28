@@ -82,7 +82,7 @@ module.exports = options => {
 
       if (error.code === 'ENOTFOUND') {
         console.log('Looks like you have some kind of internet connection issue ☹');
-      } else if(error.code === 'ETIMEDOUT') {
+      } else if (error.code === 'ETIMEDOUT') {
         console.log('Request timeout ☹ Might want to try again?');
       }
     });
