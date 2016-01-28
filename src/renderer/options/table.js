@@ -3,7 +3,7 @@ module.exports = {
   left: 1,
   keys: true,
   width: '100%',
-  height: '50%',
+  height: '95%',
   align: 'left',
   vi: true,
   mouse: true,
