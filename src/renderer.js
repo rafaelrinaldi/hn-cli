@@ -25,6 +25,7 @@ class Renderer {
 
   setupEvents() {
     this.screen.key(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
+    this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
   }
 
@@ -32,14 +33,20 @@ class Renderer {
     return this.screen.destroy();
   }
 
+  notifySelectedOnKeypress() {
+    this.selectTableItem(this.table.selected, 'c');
+  }
+
   notifySelectedOnSelect() {
+    this.selectTableItem(this.table.selected, 'enter');
+  }
+
+  selectTableItem(index, key) {
     if (this.options.shouldCloseOnSelect) {
       this.screen.destroy();
     }
 
-    if (this.options.onTableSelect) {
-      this.options.onTableSelect(this.table.selected);
-    }
+    this.options.onTableSelect(index, key);
   }
 }
 

@@ -56,9 +56,14 @@ const refresh = options => {
     });
 };
 
-const onTableSelect = index => {
+const onTableSelect = (index, key) => {
   const selected = cache[index - 1];
-  openUrl(selected.url);
+
+  if(key === 'c') {
+    openUrl(api.storyUrl(selected.id));
+  } else {
+    openUrl(selected.url);
+  }
 };
 
 const render = (renderer, data) => renderer.render(data);
