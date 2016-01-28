@@ -29,10 +29,11 @@ Options:
 
 ## Features
 
-* Will always fetch the latest stories (displaying the same order as on the actual website)
+* Will fetch the latest stories (same order as seen on HN)
 * You can use Vim arrow keys <kbd>j</kbd> and <kbd>k</kbd> to navigate through the list
-* Use <kbd>gg</kbd> to go to scroll to the first item of the list and <kbd>G</kbd> to scroll to the last one
-* When you select an item by hitting the <kbd>enter</kbd> key, it'll open the URL on your default browser
+* Use <kbd>gg</kbd> to scroll to the first item of the list and <kbd>G</kbd> to scroll to the last one
+* Hitting the <kbd>enter</kbd> key will open the URL on your default browser
+* Hitting the <kbd>c</kbd> key will open the HN comments for that story on your default browser
 * Use <kbd>esc</kbd>, <kbd>⌃C</kbd> or <kbd>q</kbd> to close the program
 
 ## License
