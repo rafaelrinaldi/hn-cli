@@ -2,8 +2,8 @@
 
 'use strict';
 
-var cli = require('../cli');
-var argv = process.argv.slice(2);
-var options = cli.parse(argv);
+const cli = require('../cli');
+const argv = process.argv.slice(2);
+const options = cli.parse(argv);
 
 cli.run(options);
