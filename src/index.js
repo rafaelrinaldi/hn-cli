@@ -5,7 +5,7 @@ const openUrl = require('openurl').open;
 const spinner = require('./spinner');
 const Renderer = require('./renderer');
 const parseTableData = require('./parsers/table');
-const fetchOptions = require('./options/fetch')();
+const fetchOptions = require('./options/fetch');
 const api = require('./api')(fetchOptions);
 
 let cache = {};
