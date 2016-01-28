@@ -3,7 +3,6 @@
 > CLI to browse [Hacker News](http://news.ycombinator.com)
 
 [![demo](./demo.png)](https://cloudup.com/iUsrpNT00WI)
-<sup>Screen recording</sup>
 
 ## Install
 
