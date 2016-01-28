@@ -25,8 +25,8 @@ function fetchTopStories() {
   return api.fetch(api.stories());
 }
 
-function fetchTopStoriesDetails(stories) {
-  spinner.start('Loading top stories details');
+function fetchTopStoriesDetails(stories, limit) {
+  spinner.start('Loading details of the latest ' + limit + ' top stories');
 
   return Promise.all(
       stories.map(function(id) {
@@ -43,7 +43,7 @@ function refresh(options) {
     })
     // Fires all requests to top stories
     .then(function(response) {
-      return fetchTopStoriesDetails(response);
+      return fetchTopStoriesDetails(response, options.limit);
     })
     // Returns a formatted array with the request response
     .then(function(response) {
