@@ -4,7 +4,6 @@ const UI = require('blessed');
 const noop = require('./noop');
 const screenOptions = require('./renderer/options/screen');
 const tableOptions = require('./renderer/options/table');
-const statusBarOptions = require('./renderer/options/status-bar');
 const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 
 class Renderer {

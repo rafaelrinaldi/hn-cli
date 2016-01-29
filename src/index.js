@@ -97,6 +97,10 @@ const createRenderer = options => {
   });
 };
 
+const reportStatusUpdate = renderer => {
+  renderer.status = `Last updated at ${now()}`;
+};
+
 const run = options => {
   const renderer = createRenderer(options);
 
@@ -104,16 +108,12 @@ const run = options => {
 
   // Fetch data then render
   ping(options).then(response => {
-    render(renderer, response)
+    render(renderer, response);
     reportStatusUpdate(renderer);
   });
 
   return renderer;
 };
-
-const reportStatusUpdate = (renderer) => {
-  renderer.status = `Last updated at ${now()}`;
-}
 
 module.exports = options => {
   const renderer = run(options);
