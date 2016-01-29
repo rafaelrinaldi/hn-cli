@@ -17,13 +17,35 @@ class Renderer {
   render(data) {
     this.screen = UI.screen(screenOptions);
     this.table = UI.listtable(tableOptions);
-    this.statusBar = UI.box(statusBarOptions);
 
+    this.statusBarLeft = UI.box({
+      width: '90%',
+      height: 1,
+      left: 1,
+      bottom: 1,
+      fg: 'white',
+      bg: 'black',
+      padding: {
+        left: 1
+      }
+    });
+    this.statusBarRight = UI.box({
+      width: '10%',
+      height: 1,
+      right: 1,
+      bottom: 1,
+      fg: '#757575',
+      bg: '#D9D9D9',
+      padding: {
+        left: 2
+      }
+    });
     this.table.focus();
     this.table.setData(data);
 
     this.screen.append(this.table);
-    this.screen.append(this.statusBar);
+    this.screen.append(this.statusBarLeft);
+    this.screen.append(this.statusBarRight);
     this.screen.render();
 
     this.setupEvents();
@@ -35,7 +57,7 @@ class Renderer {
   }
 
   set status(text) {
-    this.statusBar.setContent(text);
+    this.statusBarLeft.setContent(text);
     this.screen.render();
   }
 
@@ -63,9 +85,6 @@ class Renderer {
   }
 
   notifySelectedOnSelect() {
-    this.screen.destroy();
-    console.log('yay');
-    return
     this.selectTableItem(this.table.selected, 'enter');
   }
 
@@ -75,7 +94,8 @@ class Renderer {
   }
 
   reportProgressOnKeypress() {
-    this.status = this.progress;
+    const status = `HN | ${this.progress} | ${this.table.selected}:${this.table.items.length}`;
+    this.statusBarRight.setContent(status);
   }
 
   selectTableItem(index, key) {

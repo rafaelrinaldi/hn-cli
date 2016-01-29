@@ -9,7 +9,8 @@ module.exports = {
   mouse: true,
   style: {
     header: {
-      inverse: true,
+      fg: 'white',
+      bg: 'black',
       bold: true
     },
     cell: {
