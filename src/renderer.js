@@ -56,7 +56,7 @@ class Renderer {
   }
 
   setupEvents() {
-    this.screen.onceKey(ESCAPE_KEYS, this.destroyScreen.bind(this));
+    this.screen.onceKey(ESCAPE_KEYS, this.destroyScreen);
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
