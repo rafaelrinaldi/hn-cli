@@ -1,15 +1,16 @@
 module.exports = {
-  top: 1,
-  left: 1,
   keys: true,
   width: '100%',
-  height: '95%',
+  height: '100%-1',
   align: 'left',
+  top: 0,
+  left: 1,
   vi: true,
   mouse: true,
   style: {
     header: {
-      inverse: true,
+      fg: 'white',
+      bg: 'black',
       bold: true
     },
     cell: {

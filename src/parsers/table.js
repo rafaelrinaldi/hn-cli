@@ -13,8 +13,8 @@ module.exports = data => {
         const when = time(item.time);
 
         return [
-          String(item.title),
-          String(item.by),
+          `${item.title}`,
+          `${item.by}`,
           moment(when).fromNow()
         ];
       })
