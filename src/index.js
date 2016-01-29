@@ -89,18 +89,14 @@ const onTableSelect = (index, key) => {
 
 const render = (renderer, data) => renderer.render(data);
 
-const createRenderer = options => {
-  return new Renderer({
-    shouldCloseOnSelect: !options['keep-open']
-  });
-};
-
 const reportStatusUpdate = renderer => {
   renderer.status = `Last updated at ${now()}`;
 };
 
 const run = options => {
-  const renderer = createRenderer(options);
+  const renderer = new Renderer({
+    shouldCloseOnSelect: !options['keep-open']
+  });
 
   renderer.onTableSelect = onTableSelect;
 
