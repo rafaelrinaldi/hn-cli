@@ -56,15 +56,15 @@ class Renderer {
   }
 
   setupEvents() {
-    this.screen.onceKey(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
+    this.screen.onceKey(ESCAPE_KEYS, this.destroyScreen.bind(this));
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
     this.table.on('keypress', this.reportProgress.bind(this));
   }
 
-  destroyScreenOnKeypress() {
-    this.screen.destroy();
+  destroyScreen() {
+    return process.exit(0);
   }
 
   notifySelectedOnKeypress() {
@@ -87,11 +87,11 @@ class Renderer {
   }
 
   selectTableItem(index, key) {
-    if (this.options.shouldCloseOnSelect) {
-      this.screen.destroy();
-    }
-
     this.onTableSelect(index, key);
+
+    if (this.options.shouldCloseOnSelect) {
+      this.destroyScreen();
+    }
   }
 }
 
