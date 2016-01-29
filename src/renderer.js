@@ -4,6 +4,7 @@ const UI = require('blessed');
 const noop = require('./noop');
 const screenOptions = require('./renderer/options/screen');
 const tableOptions = require('./renderer/options/table');
+const statusBarOptions = require('./renderer/options/status-bar');
 const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 
 class Renderer {
@@ -16,11 +17,13 @@ class Renderer {
   render(data) {
     this.screen = UI.screen(screenOptions);
     this.table = UI.listtable(tableOptions);
+    this.statusBar = UI.box(statusBarOptions);
 
     this.table.focus();
     this.table.setData(data);
 
     this.screen.append(this.table);
+    this.screen.append(this.statusBar);
     this.screen.render();
 
     this.setupEvents();
@@ -28,6 +31,11 @@ class Renderer {
 
   update(data) {
     this.table.setData(data);
+    this.screen.render();
+  }
+
+  setStatus(text) {
+    this.statusBar.setContent(text);
     this.screen.render();
   }
 
@@ -52,6 +60,7 @@ class Renderer {
 
   requestRefreshOnKeypress() {
     this.onRefreshRequest();
+    this.screen.render();
   }
 
   selectTableItem(index, key) {

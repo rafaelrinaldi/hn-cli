@@ -110,8 +110,12 @@ const run = options => {
 module.exports = options => {
   const renderer = run(options);
   const onRefreshRequest = () => {
+    renderer.setStatus('Updating list, hold on...');
     // Refresh data then render
-    ping(options, true).then(response => renderer.update(response));
+    ping(options, true).then(response => {
+      renderer.setStatus('Done');
+      renderer.update(response)
+    });
   };
 
   renderer.onRefreshRequest = onRefreshRequest;
