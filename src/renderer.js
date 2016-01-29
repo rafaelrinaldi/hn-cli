@@ -21,7 +21,7 @@ class Renderer {
       width: '90%',
       height: 1,
       left: 1,
-      bottom: 1,
+      bottom: 0,
       fg: 'white',
       bg: 'black',
       padding: {
@@ -32,7 +32,7 @@ class Renderer {
       width: 20,
       height: 1,
       right: 1,
-      bottom: 1,
+      bottom: 0,
       fg: '#757575',
       bg: '#D9D9D9',
       padding: {
@@ -71,7 +71,7 @@ class Renderer {
   }
 
   get progress() {
-    return `${this.selected / this.totalItems * 100 ^ 0}%`;
+    return `${this.selected / this.totalItems * 100 >> 0}%`;
   }
 
   setupEvents() {

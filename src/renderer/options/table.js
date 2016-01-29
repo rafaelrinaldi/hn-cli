@@ -1,9 +1,9 @@
 module.exports = {
   keys: true,
   width: '100%',
-  height: '93%',
+  height: '100%-1',
   align: 'left',
-  top: 1,
+  top: 0,
   left: 1,
   vi: true,
   mouse: true,
