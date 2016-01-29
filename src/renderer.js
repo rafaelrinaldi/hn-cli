@@ -18,7 +18,7 @@ class Renderer {
     this.table = UI.listtable(tableOptions);
 
     this.statusBarLeft = UI.box({
-      width: '90%',
+      width: '100%-2',
       height: 1,
       left: 1,
       bottom: 0,
@@ -29,12 +29,13 @@ class Renderer {
       }
     });
     this.statusBarRight = UI.box({
-      width: 20,
+      width: 'shrink',
       height: 1,
       right: 1,
       bottom: 0,
       fg: '#757575',
       bg: '#D9D9D9',
+      'z-index': 2,
       padding: {
         left: 1,
         right: 1
@@ -71,7 +72,7 @@ class Renderer {
   }
 
   get progress() {
-    return `${this.selected / this.totalItems * 100 >> 0}%`;
+    return `${this.selected / (this.totalItems - 1) * 100 ^ 0}%`;
   }
 
   setupEvents() {
