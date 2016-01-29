@@ -8,6 +8,8 @@ const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 class Renderer {
   constructor(options) {
     this.options = options || {};
+    this.onTableSelect = Function();
+    this.onRefreshRequest = Function();
   }
 
   render(data) {
@@ -23,14 +25,20 @@ class Renderer {
     this.setupEvents();
   }
 
+  update(data) {
+    this.table.setData(data);
+    this.screen.render();
+  }
+
   setupEvents() {
-    this.screen.key(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
+    this.screen.onceKey(ESCAPE_KEYS, this.destroyScreenOnKeypress.bind(this));
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
+    this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
   }
 
   destroyScreenOnKeypress() {
-    return this.screen.destroy();
+    this.screen.destroy();
   }
 
   notifySelectedOnKeypress() {
@@ -41,12 +49,16 @@ class Renderer {
     this.selectTableItem(this.table.selected, 'enter');
   }
 
+  requestRefreshOnKeypress() {
+    this.onRefreshRequest();
+  }
+
   selectTableItem(index, key) {
     if (this.options.shouldCloseOnSelect) {
       this.screen.destroy();
     }
 
-    this.options.onTableSelect(index, key);
+    this.onTableSelect(index, key);
   }
 }
 

@@ -13,13 +13,10 @@ let cache = {};
 const limitResults = (results, limit) => results.slice(0, limit);
 
 const fetchTopStories = () => {
-  spinner.start('Fetching top stories');
   return api.fetch(api.stories());
 };
 
-const fetchTopStoriesDetails = (stories, limit) => {
-  spinner.start(`Loading details of the latest ${limit} top stories`);
-
+const fetchTopStoriesDetails = stories => {
   return Promise.all(
       stories.map(id => {
         return api.fetch(api.story(id));
@@ -27,17 +24,23 @@ const fetchTopStoriesDetails = (stories, limit) => {
     );
 };
 
-const refresh = options => {
+const ping = (options, shouldMute) => {
+  const log = shouldMute ? Function() : spinner.start;
+
+  log('Fetching top stories');
+
   return fetchTopStories()
     // Limit results before requests are fired
     .then(response => {
       return limitResults(response.body, options.limit);
     })
-    // Fires all requests to top stories
+    // Fires all requests
     .then(response => {
+      log(`Loading details of the latest ${options.limit} top stories`);
+
       return fetchTopStoriesDetails(response, options.limit);
     })
-    // Returns a formatted array with the request response
+    // Returns a formatted array with the response request
     .then(response => {
       return response.map(item => item.body);
     })
@@ -45,7 +48,7 @@ const refresh = options => {
       // Finally loaded
       spinner.stop();
 
-      // Store data to the cache so it can be used later
+      // Store data on local cache so it can be used later
       cache = response;
 
       return cache;
@@ -75,20 +78,44 @@ const createRenderer = options => {
   });
 };
 
-module.exports = options => {
+const handleError = error => {
+  spinner.stop();
+
+  console.log(error);
+  if (error.code === 'ENOTFOUND') {
+    console.log('Looks like you have internet connection issues ☹');
+  } else if (error.code === 'ETIMEDOUT') {
+    console.log('Request timeout ☹ Maybe try again?');
+  } else {
+    console.log(error);
+  }
+};
+
+const run = options => {
   const renderer = createRenderer(options);
 
-  refresh(options)
+  ping(options)
     .then(response => {
       render(renderer, response);
     })
     .catch(error => {
-      spinner.stop();
-
-      if (error.code === 'ENOTFOUND') {
-        console.log('Looks like you have internet connection issues ☹');
-      } else if (error.code === 'ETIMEDOUT') {
-        console.log('Request timeout ☹ Maybe try again?');
-      }
+      handleError(error);
     });
+
+  return renderer;
+};
+
+module.exports = options => {
+  const renderer = run(options);
+  const onRefreshRequest = () => {
+    ping(options, true)
+      .then(response => {
+        renderer.update(response);
+      })
+      .catch(error => {
+        handleError(error);
+      });
+  };
+
+  renderer.onRefreshRequest = onRefreshRequest;
 };
