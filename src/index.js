@@ -2,6 +2,7 @@
 
 const Promise = require('pinkie-promise');
 const openUrl = require('openurl').open;
+const now = require('./parsers/now');
 const spinner = require('./spinner');
 const Renderer = require('./renderer');
 const parseTableData = require('./parsers/table');
@@ -28,8 +29,6 @@ const fetchTopStoriesDetails = stories => {
 const handlePingError = error => {
   spinner.stop();
 
-  console.log(error);
-
   if (error.code === 'ENOTFOUND') {
     console.log('Looks like you have internet connection issues ☹');
   } else if (error.code === 'ETIMEDOUT') {
@@ -42,7 +41,7 @@ const handlePingError = error => {
 const ping = (options, shouldMute) => {
   const log = shouldMute ? noop : spinner.start;
 
-  log('Fetching top stories');
+  log(`Fetching top stories`);
 
   return fetchTopStories()
     // Limit results before requests are fired
@@ -102,10 +101,17 @@ const run = options => {
   renderer.onTableSelect = onTableSelect;
 
   // Fetch data then render
-  ping(options).then(response => render(renderer, response));
+  ping(options).then(response => {
+    render(renderer, response)
+    reportStatusUpdate(renderer);
+  });
 
   return renderer;
 };
+
+const reportStatusUpdate = (renderer) => {
+  renderer.status = `Last updated at ${now()}`;
+}
 
 module.exports = options => {
   const renderer = run(options);
@@ -113,8 +119,8 @@ module.exports = options => {
     renderer.status = `Updating list, hold on...`;
     // Refresh data then render
     ping(options, true).then(response => {
-      renderer.status = `Done`;
       renderer.update(response);
+      reportStatusUpdate(renderer);
     });
   };
 

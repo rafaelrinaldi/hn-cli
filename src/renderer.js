@@ -49,6 +49,7 @@ class Renderer {
     this.screen.render();
 
     this.setupEvents();
+    this.reportProgress();
   }
 
   update(data) {
@@ -73,7 +74,7 @@ class Renderer {
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
-    this.table.on('keypress', this.reportProgressOnKeypress.bind(this));
+    this.table.on('keypress', this.reportProgress.bind(this));
   }
 
   destroyScreenOnKeypress() {
@@ -93,7 +94,7 @@ class Renderer {
     this.screen.render();
   }
 
-  reportProgressOnKeypress() {
+  reportProgress() {
     const status = `HN | ${this.progress} | ${this.table.selected}:${this.table.items.length}`;
     this.statusBarRight.setContent(status);
   }
