@@ -20,9 +20,7 @@ const fetchTopStories = () => {
 
 const fetchTopStoriesDetails = stories => {
   return Promise.all(
-      stories.map(id => {
-        return api.fetch(api.story(id));
-      })
+      stories.map(id => api.fetch(api.story(id)))
     );
 };
 
