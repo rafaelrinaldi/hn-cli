@@ -30,12 +30,14 @@ const handlePingError = error => {
   spinner.stop();
 
   if (error.code === 'ENOTFOUND') {
-    console.log('Looks like you have internet connection issues ☹');
+    console.log(`Looks like you have internet connection issues ☹`);
   } else if (error.code === 'ETIMEDOUT') {
-    console.log('Request timeout ☹ Maybe try again?');
+    console.log(`Tried ${fetchOptions.retries} times but the request has timed out. Sorry ☹`);
   } else {
     console.log(error);
   }
+
+  process.exit(1);
 };
 
 const ping = (options, shouldMute) => {

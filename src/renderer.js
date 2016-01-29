@@ -30,14 +30,15 @@ class Renderer {
       }
     });
     this.statusBarRight = UI.box({
-      width: '10%',
+      width: 20,
       height: 1,
       right: 1,
       bottom: 1,
       fg: '#757575',
       bg: '#D9D9D9',
       padding: {
-        left: 2
+        left: 1,
+        right: 1
       }
     });
     this.table.focus();
@@ -66,7 +67,7 @@ class Renderer {
     const selected = this.table.selected;
     const total = this.table.items.length - 1;
 
-    return `${selected / total * 100}%`;
+    return `${selected / total * 100 ^ 0}%`;
   }
 
   setupEvents() {
