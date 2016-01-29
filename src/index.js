@@ -57,6 +57,10 @@ const ping = (options, shouldMute) => {
     // Format the result to a data format compatible with the table widget
     .then(response => {
       return parseTableData(response);
+    })
+    // Handle error messages
+    .catch(error => {
+      handleError(error);
     });
 };
 
@@ -74,8 +78,7 @@ const render = (renderer, data) => renderer.render(data);
 
 const createRenderer = options => {
   return new Renderer({
-    shouldCloseOnSelect: !options['keep-open'],
-    onTableSelect
+    shouldCloseOnSelect: !options['keep-open']
   });
 };
 
@@ -83,6 +86,7 @@ const handleError = error => {
   spinner.stop();
 
   console.log(error);
+
   if (error.code === 'ENOTFOUND') {
     console.log('Looks like you have internet connection issues ☹');
   } else if (error.code === 'ETIMEDOUT') {
@@ -95,13 +99,8 @@ const handleError = error => {
 const run = options => {
   const renderer = createRenderer(options);
 
-  ping(options)
-    .then(response => {
-      render(renderer, response);
-    })
-    .catch(error => {
-      handleError(error);
-    });
+  // Fetch data then render
+  ping(options).then(response => render(renderer, response));
 
   return renderer;
 };
@@ -109,13 +108,8 @@ const run = options => {
 module.exports = options => {
   const renderer = run(options);
   const onRefreshRequest = () => {
-    ping(options, true)
-      .then(response => {
-        renderer.update(response);
-      })
-      .catch(error => {
-        handleError(error);
-      });
+    // Refresh data then render
+    ping(options, true).then(response => renderer.update(response));
   };
 
   renderer.onRefreshRequest = onRefreshRequest;
