@@ -19,4 +19,7 @@ const start = text => {
   }, 100);
 };
 
-module.exports = { start, stop };
+module.exports = {
+  start,
+  stop
+};

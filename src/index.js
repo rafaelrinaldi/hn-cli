@@ -25,6 +25,20 @@ const fetchTopStoriesDetails = stories => {
     );
 };
 
+const handlePingError = error => {
+  spinner.stop();
+
+  console.log(error);
+
+  if (error.code === 'ENOTFOUND') {
+    console.log('Looks like you have internet connection issues ☹');
+  } else if (error.code === 'ETIMEDOUT') {
+    console.log('Request timeout ☹ Maybe try again?');
+  } else {
+    console.log(error);
+  }
+};
+
 const ping = (options, shouldMute) => {
   const log = shouldMute ? noop : spinner.start;
 
@@ -60,7 +74,7 @@ const ping = (options, shouldMute) => {
     })
     // Handle error messages
     .catch(error => {
-      handleError(error);
+      handlePingError(error);
     });
 };
 
@@ -82,22 +96,10 @@ const createRenderer = options => {
   });
 };
 
-const handleError = error => {
-  spinner.stop();
-
-  console.log(error);
-
-  if (error.code === 'ENOTFOUND') {
-    console.log('Looks like you have internet connection issues ☹');
-  } else if (error.code === 'ETIMEDOUT') {
-    console.log('Request timeout ☹ Maybe try again?');
-  } else {
-    console.log(error);
-  }
-};
-
 const run = options => {
   const renderer = createRenderer(options);
+
+  renderer.onTableSelect = onTableSelect;
 
   // Fetch data then render
   ping(options).then(response => render(renderer, response));
