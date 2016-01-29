@@ -1,7 +1,5 @@
 'use strict';
 
-const moment = require('moment');
+const now = require('moment');
 
-module.exports = () => {
-  return moment().format(`ddd H:mm A`);
-};
+module.exports = () => now().format(`dd H:mm A`);
