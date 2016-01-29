@@ -2,11 +2,13 @@
 
 const Promise = require('pinkie-promise');
 const openUrl = require('opn');
+const now = require('./parsers/now');
 const spinner = require('./spinner');
 const Renderer = require('./renderer');
 const parseTableData = require('./parsers/table');
 const fetchOptions = require('./options/fetch');
 const api = require('./api')(fetchOptions);
+const noop = require('./noop');
 
 let cache = {};
 
