@@ -4,6 +4,7 @@ const UI = require('blessed');
 const noop = require('./noop');
 const screenOptions = require('./renderer/options/screen');
 const tableOptions = require('./renderer/options/table');
+const statusBarOptions = require('./renderer/options/status-bar');
 const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 
 class Renderer {
@@ -17,30 +18,9 @@ class Renderer {
     this.screen = UI.screen(screenOptions);
     this.table = UI.listtable(tableOptions);
 
-    this.statusBarLeft = UI.box({
-      width: '100%-2',
-      height: 1,
-      left: 1,
-      bottom: 0,
-      fg: 'white',
-      bg: 'black',
-      padding: {
-        left: 1
-      }
-    });
-    this.statusBarRight = UI.box({
-      width: 'shrink',
-      height: 1,
-      right: 1,
-      bottom: 0,
-      fg: '#757575',
-      bg: '#D9D9D9',
-      'z-index': 2,
-      padding: {
-        left: 1,
-        right: 1
-      }
-    });
+    this.statusBarLeft = UI.box(statusBarOptions.left);
+    this.statusBarRight = UI.box(statusBarOptions.right);
+
     this.table.focus();
     this.table.setData(data);
 
@@ -66,13 +46,13 @@ class Renderer {
     return this.table.items.length;
   }
 
+  get progress() {
+    return `${this.selected / (this.totalItems - 1) * 100 ^ 0}%`;
+  }
+
   set status(text) {
     this.statusBarLeft.setContent(text);
     this.screen.render();
-  }
-
-  get progress() {
-    return `${this.selected / (this.totalItems - 1) * 100 ^ 0}%`;
   }
 
   setupEvents() {
@@ -81,7 +61,6 @@ class Renderer {
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
     this.table.on('keypress', this.reportProgress.bind(this));
-    this.table.on('prerender', this.reportProgress.bind(this));
   }
 
   destroyScreenOnKeypress() {
@@ -104,6 +83,7 @@ class Renderer {
   reportProgress() {
     const status = `HN | ${this.progress} | ${this.selected}:${this.totalItems - 1}`;
     this.statusBarRight.setContent(status);
+    this.screen.render();
   }
 
   selectTableItem(index, key) {
