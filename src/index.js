@@ -1,7 +1,7 @@
 'use strict';
 
 const Promise = require('pinkie-promise');
-const openUrl = require('openurl').open;
+const openUrl = require('opn');
 const spinner = require('./spinner');
 const Renderer = require('./renderer');
 const parseTableData = require('./parsers/table');
