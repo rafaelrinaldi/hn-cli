@@ -1,6 +1,7 @@
 'use strict';
 
 const UI = require('blessed');
+const noop = require('./noop');
 const screenOptions = require('./renderer/options/screen');
 const tableOptions = require('./renderer/options/table');
 const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
@@ -8,8 +9,8 @@ const ESCAPE_KEYS = ['escape', 'q', 'C-c'];
 class Renderer {
   constructor(options) {
     this.options = options || {};
-    this.onTableSelect = Function();
-    this.onRefreshRequest = Function();
+    this.onTableSelect = noop;
+    this.onRefreshRequest = noop;
   }
 
   render(data) {

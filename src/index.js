@@ -7,6 +7,7 @@ const Renderer = require('./renderer');
 const parseTableData = require('./parsers/table');
 const fetchOptions = require('./options/fetch');
 const api = require('./api')(fetchOptions);
+const noop = require('./noop');
 
 let cache = {};
 
@@ -25,7 +26,7 @@ const fetchTopStoriesDetails = stories => {
 };
 
 const ping = (options, shouldMute) => {
-  const log = shouldMute ? Function() : spinner.start;
+  const log = shouldMute ? noop : spinner.start;
 
   log('Fetching top stories');
 
