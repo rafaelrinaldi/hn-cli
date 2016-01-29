@@ -18,7 +18,6 @@ module.exports = {
     bottom: 0,
     fg: '#757575',
     bg: '#D9D9D9',
-    'z-index': 2,
     padding: {
       left: 1,
       right: 1
