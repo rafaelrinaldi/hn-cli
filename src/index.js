@@ -35,7 +35,7 @@ const handlePingError = error => {
     console.log(error);
   }
 
-  process.exit(1);
+  return process.exit(1);
 };
 
 const ping = (options, shouldMute) => {
