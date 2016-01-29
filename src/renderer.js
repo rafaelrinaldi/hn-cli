@@ -58,16 +58,21 @@ class Renderer {
     this.screen.render();
   }
 
+  get selected() {
+    return this.table.selected;
+  }
+
+  get totalItems() {
+    return this.table.items.length;
+  }
+
   set status(text) {
     this.statusBarLeft.setContent(text);
     this.screen.render();
   }
 
   get progress() {
-    const selected = this.table.selected;
-    const total = this.table.items.length - 1;
-
-    return `${selected / total * 100 ^ 0}%`;
+    return `${this.selected / this.totalItems * 100 ^ 0}%`;
   }
 
   setupEvents() {
@@ -76,6 +81,7 @@ class Renderer {
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
     this.table.on('keypress', this.reportProgress.bind(this));
+    this.table.on('prerender', this.reportProgress.bind(this));
   }
 
   destroyScreenOnKeypress() {
@@ -96,7 +102,7 @@ class Renderer {
   }
 
   reportProgress() {
-    const status = `HN | ${this.progress} | ${this.table.selected}:${this.table.items.length}`;
+    const status = `HN | ${this.progress} | ${this.selected}:${this.totalItems - 1}`;
     this.statusBarRight.setContent(status);
   }
 
