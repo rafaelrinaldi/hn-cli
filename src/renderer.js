@@ -34,9 +34,16 @@ class Renderer {
     this.screen.render();
   }
 
-  setStatus(text) {
+  set status(text) {
     this.statusBar.setContent(text);
     this.screen.render();
+  }
+
+  get progress() {
+    const selected = this.table.selected;
+    const total = this.table.items.length - 1;
+
+    return `${selected / total * 100}%`;
   }
 
   setupEvents() {
@@ -44,6 +51,7 @@ class Renderer {
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
+    this.table.on('keypress', this.reportProgressOnKeypress.bind(this));
   }
 
   destroyScreenOnKeypress() {
@@ -55,12 +63,19 @@ class Renderer {
   }
 
   notifySelectedOnSelect() {
+    this.screen.destroy();
+    console.log('yay');
+    return
     this.selectTableItem(this.table.selected, 'enter');
   }
 
   requestRefreshOnKeypress() {
     this.onRefreshRequest();
     this.screen.render();
+  }
+
+  reportProgressOnKeypress() {
+    this.status = this.progress;
   }
 
   selectTableItem(index, key) {
