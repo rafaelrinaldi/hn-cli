@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+# vi:syntax=javascript
 
 'use strict';
 
