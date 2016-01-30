@@ -6,4 +6,10 @@ const cli = require('../cli');
 const argv = process.argv.slice(2);
 const options = cli.parse(argv);
 
+process.on('exit', code => {
+  if (code === 0 && cli.exitCode) {
+    process.exit(cli.exitCode);
+  }
+});
+
 cli.run(options);
