@@ -82,6 +82,8 @@ const onTableSelect = (index, key) => {
 
   if (key === 'c') {
     openUrl(api.storyUrl(selected.id));
+  } else if (key === 't') {
+    openUrl(`https://twitter.com/intent/tweet?url=${selected.url}&text=${selected.title}`);
   } else {
     openUrl(selected.url);
   }

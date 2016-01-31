@@ -58,6 +58,7 @@ class Renderer {
   setupEvents() {
     this.screen.onceKey(ESCAPE_KEYS, this.destroyScreen);
     this.screen.key('c', this.notifySelectedOnKeypress.bind(this));
+    this.screen.key('t', this.notifySelectedOnKeypress.bind(this));
     this.screen.key('r', this.requestRefreshOnKeypress.bind(this));
     this.table.on('select', this.notifySelectedOnSelect.bind(this));
     this.table.on('keypress', this.reportProgress.bind(this));
@@ -67,8 +68,8 @@ class Renderer {
     return process.exit(0);
   }
 
-  notifySelectedOnKeypress() {
-    this.selectTableItem(this.table.selected, 'c');
+  notifySelectedOnKeypress(key) {
+    this.selectTableItem(this.table.selected, key);
   }
 
   notifySelectedOnSelect() {
