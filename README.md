@@ -34,6 +34,7 @@ Options:
 * Use <kbd>gg</kbd> to scroll to the first item of the list and <kbd>G</kbd> to scroll to the last one
 * Hitting the <kbd>enter</kbd> key will open the URL in your default browser
 * Hitting the <kbd>c</kbd> key will open the HN comments for that story on your default browser
+* Share an item on Twitter by hitting the <kbd>t</kbd> key
 * Hitting the <kbd>r</kbd> key will refresh the stories and update the current list
 * A status bar is fixed on the bottom of the screen to provide visual feedback about updates and reading progress
 * Use <kbd>esc</kbd>, <kbd>⌃C</kbd> or <kbd>q</kbd> to close the program
