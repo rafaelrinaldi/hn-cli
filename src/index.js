@@ -80,7 +80,7 @@ const ping = (options, shouldMute) => {
 const onTableSelect = (index, key) => {
   const selected = cache[index - 1];
 
-  if (key === 'c') {
+  if (!selected.url || key === 'c') {
     openUrl(api.storyUrl(selected.id));
   } else if (key === 't') {
     openUrl(`https://twitter.com/intent/tweet?url=${selected.url}&text=${selected.title}`);
