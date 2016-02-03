@@ -16,7 +16,8 @@ const defaults = {
   },
   default: {
     'limit': 150,
-    'keep-open': false
+    'keep-open': false,
+    'latest': false
   }
 };
 
@@ -33,6 +34,7 @@ Options:
   -h --help                 Display help and usage details.
   -l --limit                Limit the number of items to display (defaults to 15).
   -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to false).
+  --latest                  Sort the listing by the lastest entries
 `;
 
 const run = argv => hn(argv);
