@@ -27,7 +27,7 @@ Usage: hn [OPTIONS]
   CLI to browse Hacker News
 
 Example:
-  $ hn --limit 10 --keep-open
+  $ hn --limit 10 --keep-open --latest
 
 Options:
   -v --version              Display current software version.
