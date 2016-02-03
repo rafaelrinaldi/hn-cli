@@ -34,7 +34,7 @@ Options:
   -h --help                 Display help and usage details.
   -l --limit                Limit the number of items to display (defaults to 15).
   -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to false).
-  --latest                  Sort the listing by latest entries
+  --latest                  Sort the list by latest entries
 `;
 
 const run = argv => hn(argv);
