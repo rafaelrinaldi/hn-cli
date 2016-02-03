@@ -59,7 +59,7 @@ const ping = (options, shouldMute) => {
     .then(response => {
       return response.map(item => item.body);
     })
-    // Sort the reponse if requested
+    // Sort the response if options.latest requested
     .then(response => {
       return (options.latest) ? response.slice().sort(sortByTime) : response;
     })
