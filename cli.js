@@ -16,7 +16,8 @@ const defaults = {
   },
   default: {
     'limit': 150,
-    'keep-open': false
+    'keep-open': false,
+    'latest': false
   }
 };
 
@@ -26,13 +27,14 @@ Usage: hn [OPTIONS]
   CLI to browse Hacker News
 
 Example:
-  $ hn --limit 10 --keep-open
+  $ hn --limit 10 --keep-open --latest
 
 Options:
   -v --version              Display current software version.
   -h --help                 Display help and usage details.
   -l --limit                Limit the number of items to display (defaults to 15).
   -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to false).
+     --latest               Sort the list by latest entries
 `;
 
 const run = argv => hn(argv);

@@ -24,6 +24,8 @@ const fetchTopStoriesDetails = stories => {
     );
 };
 
+const sortByTime = (newsest, oldest) => oldest.time - newsest.time;
+
 const handlePingError = error => {
   spinner.stop();
 
@@ -51,12 +53,15 @@ const ping = (options, shouldMute) => {
     // Fires all requests
     .then(response => {
       log(`Loading details of the latest ${options.limit} top stories`);
-
-      return fetchTopStoriesDetails(response, options.limit);
+      return fetchTopStoriesDetails(response);
     })
     // Returns a formatted array with the response request
     .then(response => {
       return response.map(item => item.body);
+    })
+    // Sort the response if options.latest requested
+    .then(response => {
+      return options.latest ? response.slice().sort(sortByTime) : response;
     })
     .then(response => {
       // Finally loaded
