@@ -24,7 +24,7 @@ const fetchTopStoriesDetails = stories => {
     );
 };
 
-const sortByTime = (a, b) => b.time - a.time;
+const sortByTime = (previous, recent) => recent.time - previous.time;
 
 const handlePingError = error => {
   spinner.stop();
@@ -57,9 +57,11 @@ const ping = (options, shouldMute) => {
     })
     // Returns a formatted array with the response request
     .then(response => {
-      const listItems = [];
-      response.map(item => listItems.push(item.body));
-      return (options.latest) ? listItems.sort(sortByTime) : listItems;
+      return response.map(item => item.body);
+    })
+    // Sort the reponse if requested
+    .then(response => {
+      return (options.latest) ? response.slice().sort(sortByTime) : response;
     })
     .then(response => {
       // Finally loaded
