@@ -60,9 +60,7 @@ const ping = (options, shouldMute) => {
       return response.map(item => item.body);
     })
     // Sort the response if options.latest requested
-    .then(response => {
-      return options.latest ? response.slice().sort(sortByTime) : response;
-    })
+    .then(response => options.latest ? response.slice().sort(sortByTime) : response)
     .then(response => {
       // Finally loaded
       spinner.stop();
