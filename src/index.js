@@ -24,7 +24,7 @@ const fetchTopStoriesDetails = stories => {
     );
 };
 
-const sortByTime = (previous, recent) => recent.time - previous.time;
+const sortByTime = (newsest, oldest) => oldest.time - newsest.time;
 
 const handlePingError = error => {
   spinner.stop();
