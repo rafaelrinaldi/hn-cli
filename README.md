@@ -18,19 +18,20 @@ Usage: hn [OPTIONS]
   CLI to browse Hacker News
 
 Example:
-  $ hn --limit 10 --keep-open --latest
+  $ hn --limit 10 --keep-open
 
 Options:
-  -v --version              Display current software version.
-  -h --help                 Display help and usage details.
-  -l --limit                Limit the number of items to display (defaults to 150).
-  -k --keep-open            Wether or not to keep the list open after selecting an item (defaults to false).
-     --latest               Sort the list by latest entries
+  -v --version              Display current software version
+  -h --help                 Display help and usage details
+  -l --limit                Limit the number of items to display (defaults to 150)
+  -k --keep-open            Wether or not to keep the list open after selecting an item (defaults to false)
+     --latest               Sort the list by submission date
 ```
 
 ## Features
 
-* Will fetch the latest stories (same order as seen on HN)
+* By default it will list stories using the same order as seen on HN
+* You can change the list order to display the most recent ones by runnig the program with the `--latest` flag
 * You can use Vim arrow keys <kbd>j</kbd> and <kbd>k</kbd> to navigate through the list
 * Use <kbd>gg</kbd> to scroll to the first item of the list and <kbd>G</kbd> to scroll to the last one
 * Hitting the <kbd>enter</kbd> key will open the URL in your default browser
