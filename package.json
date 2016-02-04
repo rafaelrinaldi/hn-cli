@@ -1,6 +1,6 @@
 {
   "name": "@rafaelrinaldi/hn-cli",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "CLI to browse Hacker News",
   "license": "MIT",
   "repository": "rafaelrinaldi/hn-cli",
