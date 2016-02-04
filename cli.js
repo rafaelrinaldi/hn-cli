@@ -27,14 +27,14 @@ Usage: hn [OPTIONS]
   CLI to browse Hacker News
 
 Example:
-  $ hn --limit 10 --keep-open --latest
+  $ hn --limit 10 --keep-open
 
 Options:
-  -v --version              Display current software version.
-  -h --help                 Display help and usage details.
-  -l --limit                Limit the number of items to display (defaults to 15).
-  -k --keep-open            Wether or not to keep the table open after selecting an item (defaults to false).
-     --latest               Sort the list by latest entries
+  -v --version              Display current software version
+  -h --help                 Display help and usage details
+  -l --limit                Limit the number of items to display (defaults to 150)
+  -k --keep-open            Wether or not to keep the list open after selecting an item (defaults to false)
+     --latest               Sort the list by submission date
 `;
 
 const run = argv => hn(argv);
