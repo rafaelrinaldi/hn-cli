@@ -30,9 +30,9 @@ const handlePingError = error => {
   spinner.stop();
 
   if (error.code === 'ENOTFOUND') {
-    console.log(`Looks like you have internet connection issues ☹`);
+    console.log(`Looks like you have internet connection issues`);
   } else if (error.code === 'ETIMEDOUT') {
-    console.log(`Tried ${fetchOptions.retries} times but the request has timed out. Sorry ☹`);
+    console.log(`Tried ${fetchOptions.retries} times but the request has timed out`);
   } else {
     console.log(error);
   }
@@ -43,7 +43,7 @@ const handlePingError = error => {
 const ping = (options, shouldMute) => {
   const log = shouldMute ? noop : spinner.start;
 
-  log(`Fetching top stories`);
+  log(`Fetching stories`);
 
   return fetchTopStories()
     // Limit results before requests are fired
@@ -52,14 +52,14 @@ const ping = (options, shouldMute) => {
     })
     // Fires all requests
     .then(response => {
-      log(`Loading details of the latest ${options.limit} top stories`);
+      log(`Loading details ${options.latest ? 'of most recent stories' : ''}`);
       return fetchTopStoriesDetails(response);
     })
     // Returns a formatted array with the response request
     .then(response => {
       return response.map(item => item.body);
     })
-    // Sort the response if options.latest requested
+    // Sort the response by submission date if `options.latest`
     .then(response => {
       return options.latest ? response.slice().sort(sortByTime) : response;
     })
