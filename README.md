@@ -44,3 +44,9 @@ Options:
 ## License
 
 MIT © [Rafael Rinaldi](http://rinaldi.io)
+
+---
+
+<p align="center">
+  <a href="https://buymeacoff.ee/rinaldi" title="Buy me a coffee">Buy me a ☕</a>
+</p>
